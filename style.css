@@ -1,0 +1,140 @@
+root {
+  --color: white;
+}
+
+body,
+html {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.m {
+  display: flex;
+  background: var(--color);
+  height: 100%;
+  width: 100%;
+}
+
+.q {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+
+  margin: auto;
+  background: white;
+  opacity: 80%;
+  appearance: none;
+  width: 600px;
+  height: 300px;
+  padding: 15px;
+  font-size: 15px;
+  border-radius: 10px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+#text {
+  display: flex;
+  color: var(--color);
+  width: 90%;
+  height: 100%;
+  flex: 3;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 0 auto;
+  font-size: 30px;
+}
+
+#author {
+  display: flex;
+  color: var(--color);
+  width: 90%;
+  height: 100%;
+  flex: 1;
+  justify-content: end;
+  margin: auto 335px auto auto;
+  font-size: 20px;
+}
+
+.fade {
+  opacity: 1;
+  transition: 1s;
+}
+
+.buttons {
+  display: flex;
+  flex: 2;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 15px;
+  justify-content: space-around;
+  align-items: end;
+}
+
+.buttons a {
+  display: flex;
+}
+
+#new-quote {
+  background: white;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  width: 200px;
+  height: 60px;
+  opacity: 0.9;
+  border-color: var(--color);
+  color: var(--color);
+  font-size: 16px;
+  transition: all 0.4s;
+}
+#new-quote:hover,
+#new-quote:focus-visible {
+  opacity: 1 !important;
+  background: var(--color);
+  color: #f1f2fb !important;
+  border-color: #229922 !important;
+  transition: 1s !important;
+  border: 2px solid !important;
+}
+
+#tweet-quote {
+  color: var(--color);
+  margin: 0 0 7px 0;
+  width: auto;
+  transition: all 1s;
+}
+
+#tweet-quote:hover,
+#tweet-quote:focus-visible {
+  color: #1da1f2;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.textUnder {
+  text-decoration: none;
+
+  background-image: linear-gradient(black, black);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 300ms ease;
+}
+
+.textUnder:hover,
+.textUnder:focus-visible {
+  background-size: 100% 1px;
+}
+
+@media only screen and (max-width: 815px) {
+  #text {
+    font-size: 22px;
+  }
+  #author {
+    font-size: 14px;
+  }
+}
