@@ -199,7 +199,11 @@ const Footer = () => {
   return (
     <div className="footer">
       By{" "}
-      <a href="https://carloscr18.github.io/Portfolio/" className="textUnder">
+      <a
+        href="https://carloscr18.github.io/Portfolio/"
+        target="_blank"
+        className="textUnder"
+      >
         Carlos Crespo
       </a>
     </div>
