@@ -183,7 +183,7 @@ const Buttons = (props) => {
           props.quoteText +
           " " +
           props.authorText +
-          ". For more quotes: https://codepen.io/carloscr18/full/RwZjRpQ"
+          ". For more quotes: https://carloscr18.github.io/randomQuotes/"
         }
       >
         <i className="fa fa-twitter fa-3x"></i>
@@ -199,7 +199,7 @@ const Footer = () => {
   return (
     <div className="footer">
       By{" "}
-      <a href="https://codepen.io/carloscr18" className="textUnder">
+      <a href="https://carloscr18.github.io/Portfolio/" className="textUnder">
         Carlos Crespo
       </a>
     </div>
