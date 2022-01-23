@@ -1,6 +1,7 @@
 const { Provider, connect } = ReactRedux;
 const { createStore, combineReducers, applyMiddleware } = Redux;
 
+//colors for backgrounds
 const colors = [
   "#16a085",
   "#27ae60",
@@ -71,9 +72,6 @@ fetch("https://type.fit/api/quotes")
     quotes = data;
   });
 
-//console.log(quotesArray, "QuotesArray");
-//console.log(quotes, "quotes");
-
 //Redux to dos
 //We add the const strings for actions
 const INDEX = "INDEX";
@@ -139,7 +137,7 @@ class Presentational extends React.Component {
     document.documentElement.style.setProperty("--color", colors[newColor]);
   }
   render() {
-    console.log(this.props.indx);
+    //console.log(this.props.indx);
     return (
       <div id="quote-box" className="q">
         <Text quoteText={quotes[this.props.indx.slice(-1)[0]].text} />
