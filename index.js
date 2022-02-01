@@ -120,6 +120,7 @@ class Presentational extends React.Component {
     this.changeQuotes = this.changeQuotes.bind(this);
   }
 
+  //Function to filter the quotes it gets an input that is used to generate a regex pattern for matching with the text and author
   changeQuotes(words) {
     if (quotes == undefined || totalQuotes == undefined) return;
 

@@ -31,6 +31,8 @@ The technologies I used to develop this app are:
 
 - Implementing redux was the biggest challenge I had to go step by step making sure everything worked fine so the aplication could be scalable with any amount of quotes.
 
+- Implementing the filters was fun, I used react hooks to get the input and create the filters array which i later used with regex and string match to filter by either author or a quote containing that text
+
 ### What I would do different if I do it again
 
 - I would use React hooks and functional components.
