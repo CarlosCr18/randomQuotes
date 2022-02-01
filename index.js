@@ -127,7 +127,7 @@ class Presentational extends React.Component {
     quotes = totalQuotes;
 
     for (let i = 0; i < words.length; i++) {
-      let regex = new RegExp(words[i]);
+      let regex = new RegExp("(^|\\s)" + words[i] + "($|\\s)");
 
       quotes = quotes.filter((quote) => {
         let value = null;
@@ -237,8 +237,9 @@ const FilterSearchBar = (props) => {
 
   const setInputValue = () => {
     if (value === "") return;
-    setFilterValue([...filters, value]);
+    setFilterValue([...filters, value.toLocaleLowerCase()]);
     document.getElementById("input-filter").value = "";
+    setValue("");
   };
 
   const removeFilter = (filterName) => {
@@ -260,6 +261,7 @@ const FilterSearchBar = (props) => {
       <input
         className="input-filter"
         id="input-filter"
+        placeholder="Exact word filter"
         type="text"
         onChange={(event) => setValue(event.target.value)}
       ></input>
