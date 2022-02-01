@@ -63,13 +63,12 @@ let quotes = [
     author: "Dr. Seuss",
   },
 ];
-
+let totalQuotes;
 //We fetch fot the quotes json
 fetch("https://type.fit/api/quotes")
   .then((response) => response.json())
   .then((data) => {
-    console.log(data, "data");
-    quotes = data;
+    totalQuotes = quotes = data;
   });
 
 //Redux to dos
@@ -91,8 +90,9 @@ const changeQuote = (payload) => {
 const quoteReducer = (state = [0], action) => {
   switch (action.type) {
     case INDEX:
+      if (quotes.length == 1) return [...state, action.payload];
       if ([...state].slice(-1)[0] === action.payload) {
-        if (action.payload === quotes.length) {
+        if (action.payload === quotes.length - 1) {
           action.payload -= 1;
         } else {
           action.payload += 1;
@@ -115,14 +115,42 @@ const store = createStore(quoteReducer);
 class Presentational extends React.Component {
   constructor(props) {
     super(props);
-
     //bind the buttons
     this.newQuote = this.newQuote.bind(this);
+    this.changeQuotes = this.changeQuotes.bind(this);
+  }
+
+  changeQuotes(words) {
+    if (quotes == undefined || totalQuotes == undefined) return;
+
+    quotes = totalQuotes;
+
+    for (let i = 0; i < words.length; i++) {
+      let regex = new RegExp(words[i]);
+
+      quotes = quotes.filter((quote) => {
+        let value = null;
+        value = quote.text.toLowerCase().match(regex);
+        if (quote.author !== null && value == null) {
+          value = quote.author.toLowerCase().match(regex);
+        }
+        return value;
+      });
+    }
+
+    if (quotes.length == 0) {
+      quotes.push({
+        text: "There are no matching quotes",
+        author: "",
+      });
+    }
+
+    document.getElementById("quotesLengthIndicator").style.display = "block";
+    this.props.newQuote();
   }
 
   //Function to modify content and call dispatch
   newQuote() {
-    console.log(quotes);
     this.props.newQuote();
 
     let newColor = Math.floor(Math.random() * colors.length);
@@ -135,9 +163,9 @@ class Presentational extends React.Component {
     }
 
     document.documentElement.style.setProperty("--color", colors[newColor]);
+    document.getElementById("quotesLengthIndicator").style.display = "block";
   }
   render() {
-    //console.log(this.props.indx);
     return (
       <div id="quote-box" className="q">
         <Text quoteText={quotes[this.props.indx.slice(-1)[0]].text} />
@@ -146,8 +174,10 @@ class Presentational extends React.Component {
           quoteText={quotes[this.props.indx.slice(-1)[0]].text}
           authorText={quotes[this.props.indx.slice(-1)[0]].author}
           newQuote={this.newQuote}
+          currentIndex={this.props.indx.slice(-1)[0] + 1}
         />
         <Footer />
+        <FilterSearchBar changeQuotesButton={this.changeQuotes} />
       </div>
     );
   }
@@ -186,9 +216,67 @@ const Buttons = (props) => {
       >
         <i className="fa fa-twitter fa-3x"></i>
       </a>
+      <p id="quotesLengthIndicator">
+        {props.currentIndex + "/" + quotes.length}
+      </p>
       <button id="new-quote" onClick={props.newQuote}>
         New Quote
       </button>
+    </div>
+  );
+};
+
+const FilterSearchBar = (props) => {
+  const [value, setValue] = React.useState("");
+  const [filters, setFilterValue] = React.useState([]);
+
+  React.useEffect(() => {
+    props.changeQuotesButton(filters);
+  }, [filters]);
+
+  const setInputValue = () => {
+    if (value === "") return;
+    setFilterValue([...filters, value]);
+    document.getElementById("input-filter").value = "";
+  };
+
+  const removeFilter = (filterName) => {
+    setFilterValue(
+      filters.filter((filtertoerase) => filtertoerase !== filterName)
+    );
+  };
+
+  return (
+    <div className="filterSearch">
+      <button
+        className="btn btn-filter"
+        onClick={() => {
+          setInputValue();
+        }}
+      >
+        🔍 Filter
+      </button>
+      <input
+        className="input-filter"
+        id="input-filter"
+        type="text"
+        onChange={(event) => setValue(event.target.value)}
+      ></input>
+      <div className="filter-card-container">
+        {filters.map((filter) => {
+          return (
+            <div className="filter-card">
+              <p>{filter}</p>
+              <button
+                className="filter-card-btn"
+                onClick={() => removeFilter(filter)}
+              >
+                X
+              </button>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
