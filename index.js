@@ -127,7 +127,7 @@ class Presentational extends React.Component {
     quotes = totalQuotes;
 
     for (let i = 0; i < words.length; i++) {
-      let regex = new RegExp("(^|\\s)" + words[i] + "($|\\s)");
+      let regex = new RegExp("(^|\\s)" + words[i] + "($|\\s|\\.)");
 
       quotes = quotes.filter((quote) => {
         let value = null;
@@ -230,17 +230,39 @@ const Buttons = (props) => {
 const FilterSearchBar = (props) => {
   const [value, setValue] = React.useState("");
   const [filters, setFilterValue] = React.useState([]);
+  // console.log(value);
 
-  React.useEffect(() => {
-    props.changeQuotesButton(filters);
-  }, [filters]);
-
+  //function to modify the filters
   const setInputValue = () => {
     if (value === "") return;
+
     setFilterValue([...filters, value.toLocaleLowerCase()]);
     document.getElementById("input-filter").value = "";
     setValue("");
   };
+
+  //Change the quote when a nwe filter is added
+  React.useEffect(() => {
+    props.changeQuotesButton(filters);
+  }, [filters]);
+
+  //useEffect hook to listen to keydown enter event
+  React.useEffect(() => {
+    let inputElement = document.getElementById("input-filter");
+
+    inputElement.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        setInputValue();
+      }
+    });
+    return () => {
+      inputElement.removeEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          setInputValue();
+        }
+      });
+    };
+  }, [value]);
 
   const removeFilter = (filterName) => {
     setFilterValue(
@@ -261,7 +283,7 @@ const FilterSearchBar = (props) => {
       <input
         className="input-filter"
         id="input-filter"
-        placeholder="Exact word filter"
+        placeholder="Word filter"
         type="text"
         onChange={(event) => setValue(event.target.value)}
       ></input>
