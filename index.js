@@ -311,7 +311,7 @@ const Footer = () => {
     <div className="footer">
       By{" "}
       <a
-        href="https://carloscr18.github.io/Portfolio/"
+        href="https://github.com/CarlosCr18"
         target="_blank"
         className="textUnder"
       >
